@@ -8,10 +8,15 @@ export type Metric = { value: string; label: string };
 export type ProblemPoint = { title: string; body: string };
 
 export type MediaKind = "phone" | "panel" | "duo" | "chart" | "photos";
+
+// A media slot renders a real image (or grid of images) when `image`/`images`
+// is set; otherwise it falls back to an abstract `media` placeholder.
 export type DetailSection = {
   title: string;
   body: string;
-  media: MediaKind;
+  media?: MediaKind;
+  image?: string;
+  images?: string[];
   caption?: string;
 };
 
@@ -23,10 +28,24 @@ export type Project = {
   title: string;
   overview: string;
   collaborators: string[];
-  problem: { heading: string; body: string; points: ProblemPoint[] };
+  hero?: { image?: string; media?: MediaKind };
+  problem: {
+    heading: string;
+    body: string;
+    points: ProblemPoint[];
+    media?: MediaKind;
+    image?: string;
+    images?: string[];
+  };
   outcomes: { heading: string; body: string; metrics: Metric[] };
   solution: { heading: string; body: string; sections: DetailSection[] };
-  process: { heading: string; body: string; note: string };
+  process: {
+    heading: string;
+    body: string;
+    note: string;
+    media?: MediaKind;
+    images?: string[];
+  };
 };
 
 export const projects: Project[] = [
@@ -39,7 +58,9 @@ export const projects: Project[] = [
     overview:
       "Rebuilt Ambitio's postgraduate application platform into a decision-making engine — turning a static status tracker into a dashboard that thousands of learners open every day to know exactly what to do next.",
     collaborators: ["Priya Nair", "Rahul Mehta", "Sana Iqbal"],
+    hero: { media: "phone" },
     problem: {
+      media: "duo",
       heading: "The dashboard told users what happened, not what to do",
       body: "By early 2025, the dashboard was the least-used surface in the product despite being the default landing screen. Learners bounced to WhatsApp and email to figure out their next step — the exact opposite of what a dashboard should do.",
       points: [
@@ -90,6 +111,7 @@ export const projects: Project[] = [
       ],
     },
     process: {
+      media: "photos",
       heading: "Testing & rollout",
       body: "We shipped behind a flag to 5% of learners, ran moderated sessions with first-generation applicants, and iterated on the priority logic three times before the full rollout.",
       note: "The hardest part was tuning the ranking — early versions felt 'nagging' until we let users snooze non-urgent items.",
@@ -99,65 +121,71 @@ export const projects: Project[] = [
     slug: "fibr",
     company: "Fibr.ai",
     year: "2025",
-    role: "Product Designer (Contract)",
+    role: "Website design & Framer development — end-to-end",
     title: "Driving 35% traffic growth through a strategic CMS design in Framer",
     overview:
-      "Designed and built Fibr.ai's web presence as a scalable CMS in Framer — a system that let a small marketing team ship localized landing pages across 50 states without a designer in the loop.",
-    collaborators: ["Devon Clark", "Aisha Rahman"],
+      "At Fibr.ai, I led the design and development of their complete website infrastructure built on Framer — including agent-specific pages for Liv, Max, and Aya, and a scalable CMS for conversion rate optimization across all 50 US states.",
+    collaborators: [],
+    hero: { image: "/work/fibr/cro-agency.avif" },
     problem: {
-      heading: "Every new landing page needed a designer",
-      body: "Fibr.ai wanted to rank in 50 states, but each localized page was hand-built. Growth was capped by design bandwidth, and pages drifted off-brand the moment the team moved fast.",
+      heading: "Scaling a CRO web presence across 50 states — without the maintenance overhead",
+      body: "Fibr.ai needed a web presence that could target diverse geographic markets while holding to CRO best practices. It had to support multiple AI-agent pages with dynamic content and deliver localized experiences across all 50 US states — all without ballooning into an unmaintainable pile of pages.",
       points: [
         {
-          title: "No reusable system",
-          body: "Sections were copy-pasted between pages, so a single brand change meant editing dozens of files by hand.",
+          title: "50 states, one team",
+          body: "Every state needed its own localized, SEO-ready page. Hand-building and maintaining those manually would have been impossible for a lean team.",
         },
         {
-          title: "Marketers were blocked on design",
-          body: "Publishing a new state page required a designer, turning a 30-minute content task into a multi-day queue.",
+          title: "Three distinct AI agents",
+          body: "Liv, Max, and Aya each needed a conversion-optimized page with its own story and interactive elements — while still feeling like one coherent product.",
         },
         {
-          title: "Inconsistent, slow pages",
-          body: "Ad-hoc pages shipped with heavy assets and mismatched spacing, hurting both Core Web Vitals and conversion.",
+          title: "CRO best-practices, everywhere",
+          body: "Consistency mattered: every page had to follow proven conversion patterns rather than drift as new content was added.",
         },
       ],
     },
     outcomes: {
-      heading: "A system that scales without a designer",
-      body: "The CMS turned page creation into a content task and unlocked the state-by-state expansion the growth team had planned.",
+      heading: "A scalable system that compounds traffic and efficiency",
+      body: "The Framer build turned a manual, design-bound process into a content-driven system — unlocking geographic reach and measurable growth.",
       metrics: [
-        { value: "+35%", label: "Organic traffic growth" },
-        { value: "50", label: "State pages shipped from one system" },
-        { value: "−20%", label: "Customer acquisition cost" },
+        { value: "+35%", label: "Increase in targeted traffic" },
+        { value: "+20%", label: "Improvement in CAC efficiency" },
+        { value: "50", label: "US states with localized CMS pages" },
       ],
     },
     solution: {
-      heading: "Componentize the whole marketing site",
-      body: "We broke the site into a library of CMS-driven sections that marketers assemble like blocks — every one on-brand by construction.",
+      heading: "Agent pages up front, a CMS engine underneath",
+      body: "I designed and built the whole site in Framer: conversion-focused pages for each AI agent, a CMS architecture that scales to every state, and a dynamic FAQ system that the team can maintain from a spreadsheet.",
       sections: [
         {
-          title: "A block library anyone can use",
-          body: "Heroes, feature grids, testimonials and CTAs became configurable Framer components bound to CMS fields. A marketer builds a full page by picking blocks and filling in copy — no layout decisions required.",
-          media: "panel",
-          caption: "The section library, driven entirely by CMS content",
+          title: "Conversion-optimized AI agent pages",
+          body: "Three dedicated pages — Aya (website monitoring), Liv (ad-to-page personalization), and Max (A/B testing) — each with interactive hero elements and layouts built around a clear, single conversion goal, while sharing one design language.",
+          images: [
+            "/work/fibr/aya.webp",
+            "/work/fibr/liv.webp",
+            "/work/fibr/max.avif",
+          ],
+          caption: "Agent pages for Aya, Liv, and Max",
         },
         {
-          title: "Localization built in",
-          body: "State, city and keyword fields flow into every block automatically, so one template renders 50 unique, SEO-ready pages. Update the template once and every page updates with it.",
-          media: "phone",
-          caption: "One template, fifty localized outputs",
+          title: "A scalable CMS for 50 states",
+          body: "A CMS architecture drives 50 state-specific pages from a single set of templates. Localized content and targeted messaging flow in through CMS fields, so the marketing team can expand into a new market without touching layout or code.",
+          image: "/work/fibr/cro-agency.avif",
+          caption: "One system, every market — on-brand by construction",
         },
         {
-          title: "Fast by default",
-          body: "Responsive rules, image optimization and consistent spacing are baked into the components, so every published page is fast and pixel-consistent without anyone thinking about it.",
-          media: "duo",
+          title: "A dynamic FAQ system powered by Google Sheets",
+          body: "I integrated Framer CMS with Google Sheets so the FAQ section — categories and answers alike — stays dynamic and easy to maintain. Non-technical teammates update a sheet and the site follows, no redeploy required.",
+          image: "/work/fibr/faq.webp",
+          caption: "CMS-driven FAQ, editable straight from a spreadsheet",
         },
       ],
     },
     process: {
-      heading: "Testing & rollout",
-      body: "We piloted with five state pages, measured Core Web Vitals and conversion against the old hand-built pages, then handed the system to the marketing team with a short playbook.",
-      note: "The biggest unlock was governance — locking layout while opening up content kept 50 pages on-brand.",
+      heading: "Key learnings",
+      body: "Building this end-to-end sharpened four things: architecting for scalability from day one, integrating external data sources (Framer CMS × Google Sheets) cleanly, letting CRO principles drive design decisions, and working at the intersection of design and development to ship without a handoff.",
+      note: "Designing and building in the same tool meant every CRO decision could be validated live — no gap between the mockup and the shipped page.",
     },
   },
 ];

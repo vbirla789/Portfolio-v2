@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import BackButton from "../../components/BackButton";
 import CaseStudyNav from "../../components/CaseStudyNav";
 import Footer from "../../components/Footer";
-import { Media } from "../../components/caseMedia";
+import { CaseMedia } from "../../components/caseMedia";
 import { getProject, projects } from "../../lib/projects";
 import { colors, t, type } from "../../theme";
 
@@ -82,25 +82,33 @@ export default async function CaseStudyPage({
             <Body>{project.overview}</Body>
           </div>
 
-          <div className="mt-10">
-            <Media kind="phone" />
-          </div>
+          {project.hero ? (
+            <div className="mt-10">
+              <CaseMedia
+                image={project.hero.image}
+                media={project.hero.media}
+                alt={`${project.company} overview`}
+              />
+            </div>
+          ) : null}
 
           <div className="mt-10 flex flex-wrap gap-x-16 gap-y-6">
             <div>
               <Eyebrow>Role</Eyebrow>
               <p style={t(type.expOrg)}>{project.role}</p>
             </div>
-            <div>
-              <Eyebrow>Collaborators</Eyebrow>
-              <div className="flex flex-col gap-1">
-                {project.collaborators.map((c) => (
-                  <span key={c} style={t(type.expCompany)}>
-                    {c}
-                  </span>
-                ))}
+            {project.collaborators.length > 0 ? (
+              <div>
+                <Eyebrow>Collaborators</Eyebrow>
+                <div className="flex flex-col gap-1">
+                  {project.collaborators.map((c) => (
+                    <span key={c} style={t(type.expCompany)}>
+                      {c}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </section>
 
@@ -135,9 +143,16 @@ export default async function CaseStudyPage({
             ))}
           </ol>
 
-          <div className="mt-10">
-            <Media kind="duo" />
-          </div>
+          {project.problem.media || project.problem.image || project.problem.images ? (
+            <div className="mt-10">
+              <CaseMedia
+                image={project.problem.image}
+                images={project.problem.images}
+                media={project.problem.media}
+                alt={`${project.company} problem`}
+              />
+            </div>
+          ) : null}
         </section>
 
         <div className="my-16 h-px w-full" style={{ background: colors.line }} />
@@ -183,10 +198,17 @@ export default async function CaseStudyPage({
                 <p className="mt-2 max-w-[560px]" style={t(type.aboutBody)}>
                   {s.body}
                 </p>
-                <div className="mt-8">
-                  <Media kind={s.media} />
-                  {s.caption ? <Caption>{s.caption}</Caption> : null}
-                </div>
+                {s.media || s.image || s.images ? (
+                  <div className="mt-8">
+                    <CaseMedia
+                      image={s.image}
+                      images={s.images}
+                      media={s.media}
+                      alt={s.title}
+                    />
+                    {s.caption ? <Caption>{s.caption}</Caption> : null}
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>
@@ -204,9 +226,15 @@ export default async function CaseStudyPage({
             <Body>{project.process.body}</Body>
           </div>
 
-          <div className="mt-10">
-            <Media kind="photos" />
-          </div>
+          {project.process.media || project.process.images ? (
+            <div className="mt-10">
+              <CaseMedia
+                images={project.process.images}
+                media={project.process.media}
+                alt={`${project.company} process`}
+              />
+            </div>
+          ) : null}
 
           <div className="mt-10 rounded-2xl bg-zinc-900 px-6 py-5">
             <p className="italic" style={{ ...t(type.aboutBody), color: "#e7e5e4" }}>

@@ -139,6 +139,48 @@ function Photos() {
   );
 }
 
+/** A real screenshot rendered full-width (assets already ship with their own frame/bg). */
+function ImageFrame({ src, alt }: { src: string; alt: string }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={alt}
+      className="w-full rounded-2xl ring-1 ring-black/5"
+      loading="lazy"
+    />
+  );
+}
+
+/**
+ * Media chooser for a case-study slot: renders a grid of real images, a single
+ * real image, or an abstract placeholder — in that order of preference.
+ */
+export function CaseMedia({
+  image,
+  images,
+  media,
+  alt = "Project screenshot",
+}: {
+  image?: string;
+  images?: string[];
+  media?: MediaKind;
+  alt?: string;
+}) {
+  if (images && images.length > 0) {
+    return (
+      <div className="flex flex-col gap-4">
+        {images.map((src, i) => (
+          <ImageFrame key={src} src={src} alt={`${alt} ${i + 1}`} />
+        ))}
+      </div>
+    );
+  }
+  if (image) return <ImageFrame src={image} alt={alt} />;
+  if (media) return <Media kind={media} />;
+  return null;
+}
+
 export function Media({ kind }: { kind: MediaKind }) {
   switch (kind) {
     case "phone":
