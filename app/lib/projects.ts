@@ -18,6 +18,7 @@ export type DetailSection = {
   image?: string;
   images?: string[];
   caption?: string;
+  table?: { columns: string[]; rows: string[][] };
 };
 
 export type Project = {
@@ -28,7 +29,7 @@ export type Project = {
   title: string;
   overview: string;
   collaborators: string[];
-  hero?: { image?: string; media?: MediaKind };
+  hero?: { image?: string; media?: MediaKind; video?: string };
   problem: {
     heading: string;
     body: string;
@@ -37,7 +38,7 @@ export type Project = {
     image?: string;
     images?: string[];
   };
-  outcomes: { heading: string; body: string; metrics: Metric[] };
+  outcomes?: { heading: string; body: string; metrics: Metric[] };
   solution: { heading: string; body: string; sections: DetailSection[] };
   process: {
     heading: string;
@@ -62,7 +63,7 @@ export const projects: Project[] = [
       "Siddhant Ghosh (SPD)",
       "Saransh Rawat (MD)",
     ],
-    hero: { media: "phone" }, // TODO: replace with real submission-flow screenshot
+    hero: { video: "/work/noon/proto.mp4" },
     problem: {
       heading: "Reviews are everywhere on noon — but almost all of them are a single star tap",
       body: "Photo and text reviews are the most persuasive content on a product page: shoppers who engage with photo reviews add to cart at nearly 2× the PDP average. Yet the flow that creates those reviews is so heavy that the vast majority never get made — the star tap is where most people stop.",
@@ -81,31 +82,31 @@ export const projects: Project[] = [
         },
       ],
     },
-    outcomes: {
-      // In development — no live numbers yet. Framed as directional targets.
-      heading: "What success looks like",
-      body: "The flow is still in development, so there are no live numbers yet. Success is defined as more reviews that carry real text — and, over time, media — with fewer people opening the form only to abandon it.",
-      metrics: [
-        { value: "↑", label: "Reviews that include written text" },
-        { value: "↑", label: "Review-form completion" },
-        { value: "↓", label: "Review-form abandonment" },
-      ],
-    },
     solution: {
       heading: "Make writing a review as easy as tapping",
       body: "The old flow wasn't broken step-by-step — the real blocker was the blank text box. Faced with an empty field, most people just tapped a star and left. So instead of asking people to write, the new flow lets them tap: rating-aware chips capture the gist, and AI turns those taps into a real, first-person review.",
       sections: [
         {
           title: "Rating-aware question chips",
-          body: "Based on the rating you give, the flow surfaces the right prompts — what worked, what didn't, fit, quality, delivery — as tappable chips. You just tap the ones that match your experience. No typing, no blank page.",
-          media: "phone",
-          caption: "Placeholder — chip selection (screens to attach)",
+          body: "Eight product parameters power the chips — the star rating decides how they split across two prompts. A 5-star review only offers positives to affirm; a 1-star only surfaces things to improve; the middle ratings mix both. The questions always match the sentiment, so tapping is all it takes.",
+          image: "/work/noon/rating-states.png",
+          caption: "The same 8 parameters, split by rating (5★ → 1★)",
+          table: {
+            columns: ["Star rating", "What went well?", "What could have been better?"],
+            rows: [
+              ["5", "8 chips", "—"],
+              ["4", "6 chips", "2 chips"],
+              ["3", "4 chips", "4 chips"],
+              ["2", "2 chips", "6 chips"],
+              ["1", "—", "8 chips"],
+            ],
+          },
         },
         {
           title: "One tap to generate the review",
-          body: "Hit Generate and AI writes a natural, first-person review from the chips you tapped — ready to post as-is or tweak. Editing a draft is far easier than starting from nothing, and that's exactly what gets the quiet majority to leave real text.",
-          media: "panel",
-          caption: "Placeholder — AI-generated review (screens to attach)",
+          body: "Hit Generate and AI writes a natural, first-person review from the chips you tapped — ready to post as-is, tweak, or add photos. Editing a draft is far easier than starting from nothing, and that's exactly what gets the quiet majority to leave real text.",
+          image: "/work/noon/generate.png",
+          caption: "From picks to a first-person review — post, tweak, or add photos",
         },
       ],
     },

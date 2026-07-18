@@ -14,10 +14,16 @@ const items = [
 
 export default function CaseStudyNav() {
   const [active, setActive] = useState("overview");
+  // only show nav items whose section actually exists on the page
+  const [shown, setShown] = useState(items);
   // while true, ignore scroll-spy so a click's chosen section stays active mid-scroll
   const lockRef = useRef(false);
   const lockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastActiveRef = useRef<string | null>(null); // for the per-section scroll tick
+
+  useEffect(() => {
+    setShown(items.filter((it) => document.getElementById(it.id)));
+  }, []);
 
   useEffect(() => {
     preloadAudio(); // build the audio graph up-front
@@ -80,7 +86,7 @@ export default function CaseStudyNav() {
       aria-label="Case study navigation"
     >
       <ul className="flex flex-col gap-1.5">
-        {items.flatMap((it, i) => {
+        {shown.flatMap((it, i) => {
           const isActive = active === it.id;
           const rows = [];
 

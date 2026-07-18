@@ -95,6 +95,7 @@ export default async function CaseStudyPage({
               <CaseMedia
                 image={project.hero.image}
                 media={project.hero.media}
+                video={project.hero.video}
                 alt={`${project.company} overview`}
               />
             </div>
@@ -163,29 +164,33 @@ export default async function CaseStudyPage({
           ) : null}
         </section>
 
-        <div className="my-16 h-px w-full" style={{ background: colors.line }} />
+        {project.outcomes ? (
+          <>
+            <div className="my-16 h-px w-full" style={{ background: colors.line }} />
 
-        {/* ---------------- Outcomes ---------------- */}
-        <section id="outcomes" className="scroll-mt-28">
-          <Eyebrow>Outcomes</Eyebrow>
-          <h2 className="max-w-[600px]" style={t(type.caseH2)}>
-            {project.outcomes.heading}
-          </h2>
-          <div className="mt-5">
-            <Body>{project.outcomes.body}</Body>
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {project.outcomes.metrics.map((m) => (
-              <div key={m.label} className="rounded-2xl bg-zinc-50 p-6">
-                <div style={t(type.caseMetric)}>{m.value}</div>
-                <p className="mt-2" style={{ ...t(type.expMeta), color: "#666D85" }}>
-                  {m.label}
-                </p>
+            {/* ---------------- Outcomes ---------------- */}
+            <section id="outcomes" className="scroll-mt-28">
+              <Eyebrow>Outcomes</Eyebrow>
+              <h2 className="max-w-[600px]" style={t(type.caseH2)}>
+                {project.outcomes.heading}
+              </h2>
+              <div className="mt-5">
+                <Body>{project.outcomes.body}</Body>
               </div>
-            ))}
-          </div>
-        </section>
+
+              <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+                {project.outcomes.metrics.map((m) => (
+                  <div key={m.label} className="rounded-2xl bg-zinc-50 p-6">
+                    <div style={t(type.caseMetric)}>{m.value}</div>
+                    <p className="mt-2" style={{ ...t(type.expMeta), color: "#666D85" }}>
+                      {m.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        ) : null}
 
         <div className="my-16 h-px w-full" style={{ background: colors.line }} />
 
@@ -206,6 +211,40 @@ export default async function CaseStudyPage({
                 <p className="mt-2 max-w-[560px]" style={{ ...t(type.aboutBody), color: BODY_COLOR, fontWeight: 400 }}>
                   {s.body}
                 </p>
+                {s.table ? (
+                  <div className="mt-6 max-w-[560px] overflow-x-auto rounded-xl ring-1 ring-black/5">
+                    <table className="w-full text-left">
+                      <thead>
+                        <tr className="border-b border-black/5">
+                          {s.table.columns.map((c) => (
+                            <th
+                              key={c}
+                              className="px-4 py-3 font-mono text-[11px] font-medium uppercase tracking-wide"
+                              style={{ color: colors.tertiary }}
+                            >
+                              {c}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-black/5">
+                        {s.table.rows.map((row, ri) => (
+                          <tr key={ri}>
+                            {row.map((cell, ci) => (
+                              <td
+                                key={ci}
+                                className="px-4 py-3 text-[14px]"
+                                style={{ color: ci === 0 ? colors.primary : BODY_COLOR }}
+                              >
+                                {cell}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : null}
                 {s.media || s.image || s.images ? (
                   <div className="mt-8">
                     <CaseMedia

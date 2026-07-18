@@ -160,13 +160,32 @@ export function CaseMedia({
   image,
   images,
   media,
+  video,
   alt = "Project screenshot",
 }: {
   image?: string;
   images?: string[];
   media?: MediaKind;
+  video?: string;
   alt?: string;
 }) {
+  if (video) {
+    return (
+      <div className="flex items-center justify-center rounded-2xl bg-zinc-100 px-6 py-12">
+        <div className="overflow-hidden rounded-[38px]">
+          <video
+            className="block h-[440px] w-auto object-contain"
+            src={video}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+          />
+        </div>
+      </div>
+    );
+  }
   if (images && images.length > 0) {
     return (
       <div className="flex flex-col gap-4">
