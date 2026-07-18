@@ -12,7 +12,7 @@ const items: { id: string; label: string; href?: string }[] = [
   { id: "about", label: "About" },
   { id: "work", label: "Work" },
   { id: "experience", label: "Experience" },
-  { id: "fun", label: "Fun" },
+  { id: "fun", label: "Concepts" },
   { id: "resume", label: "Resume", href: RESUME_URL },
 ];
 
@@ -99,7 +99,7 @@ export default function SideNav() {
                 }`}
               />
               <span
-                className={`whitespace-nowrap text-[15px] leading-none transition-colors duration-300 ease-out ${
+                className={`whitespace-nowrap text-[13px] uppercase tracking-wide leading-none transition-colors duration-300 ease-out ${
                   isActive
                     ? "font-medium text-[var(--c-primary)]"
                     : "font-normal text-[var(--c-tertiary)] group-hover/item:text-[var(--c-primary)]"

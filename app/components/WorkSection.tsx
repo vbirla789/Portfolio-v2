@@ -72,6 +72,7 @@ const experience: {
 const funVideos = [
   { src: "/fun/experiment-1.mp4", title: "Expense Tracker", year: "2026" },
   { src: "/fun/experiment-2.mp4", title: "Editing Experience", year: "2026" },
+  { src: "/fun/experiment-3.mp4", title: "Post Review Submission", year: "2026" },
 ];
 
 /* ---------- building blocks ---------- */
@@ -202,30 +203,36 @@ export default function WorkSection() {
         </div>
       </Section>
 
-      {/* FUN */}
-      <Section id="fun" label="Fun">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      {/* CONCEPTS — three scaled-down cards that fit the column */}
+      <Section id="fun" label="Concepts">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
           {funVideos.map((v) => (
             <div
               key={v.src}
-              className="flex flex-col gap-10 rounded-2xl bg-zinc-50 p-6 ring-1 ring-black/5"
+              className="flex flex-col gap-6 rounded-2xl bg-zinc-50 p-4 ring-1 ring-black/5"
             >
-              {/* video — shown in full, correct iPhone aspect (no crop) */}
+              {/* video — full, correct iPhone aspect (no crop), rounded corners */}
               <div className="flex justify-center">
-                <video
-                  className="h-[460px] w-auto rounded-[22px] object-contain"
-                  src={v.src}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                />
+                <div className="overflow-hidden rounded-[18px]">
+                  <video
+                    className="block h-[320px] w-auto object-contain"
+                    src={v.src}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                </div>
               </div>
               {/* title + year */}
               <div className="flex items-center justify-between">
-                <span style={t(type.projectTitle)}>{v.title}</span>
-                <span style={{ ...t(type.expMeta), color: colors.tertiary }}>
+                <span style={{ ...t(type.projectTitle), fontSize: 13 }}>
+                  {v.title}
+                </span>
+                <span
+                  style={{ ...t(type.expMeta), color: colors.tertiary, fontSize: 12 }}
+                >
                   {v.year}
                 </span>
               </div>
