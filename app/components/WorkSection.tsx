@@ -22,47 +22,18 @@ const projects: Project[] = [
     company: "Ambitio",
     year: "2025",
     logo: "/logos/ambitio.avif",
-    title: "Driving 14% Dashboard Adoption Through Strategic UX Redesign",
-    preview: <AmbitioPreview />,
+    title: "Rebuilding Ambitio's dashboard to drive 14% more adoption",
+    image: "/work/ambitio/course-finder.png",
   },
   {
     slug: "fibr",
     company: "Fibr.ai",
     year: "2025",
     logo: "/logos/fibr.avif",
-    title: "Driving 35% Traffic Growth Through Strategic CMS Design in Framer",
-    image: "/work/fibr/max.avif",
+    title: "A Framer CMS that scaled Fibr.ai's traffic by 35%",
+    image: "/work/fibr/liv.webp",
   },
 ];
-
-function AmbitioPreview() {
-  return (
-    <div className="h-full w-full rounded-lg bg-white p-4 shadow-sm ring-1 ring-black/5">
-      <div className="mb-3 flex items-center justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-400">
-          Dashboard Adoption
-        </span>
-        <span className="rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-600">
-          +14%
-        </span>
-      </div>
-      <div className="flex h-24 items-end gap-2">
-        {[38, 52, 46, 63, 58, 74, 82].map((h, i) => (
-          <div
-            key={i}
-            className="flex-1 rounded-t-sm bg-gradient-to-t from-[#7c5cff] to-[#a78bfa]"
-            style={{ height: `${h}%` }}
-          />
-        ))}
-      </div>
-      <div className="mt-3 flex gap-3 text-[10px] text-zinc-400">
-        <span>Week 1</span>
-        <span className="ml-auto">Week 7</span>
-      </div>
-    </div>
-  );
-}
-
 
 /* ---------- Experience ---------- */
 
@@ -95,12 +66,6 @@ const experience: {
     company: "DZINR",
     period: "Jan 2025 — April 2025",
     logo: "/logos/dzinr.avif",
-  },
-  {
-    role: "Product Designer Intern",
-    company: "Unoptimsed Std.",
-    period: "Nov 2024 — Dec 2024",
-    logo: "/logos/unoptimised.avif",
   },
 ];
 
@@ -169,7 +134,7 @@ export default function WorkSection() {
           {projects.map((p) => (
             <Link key={p.company} href={`/work/${p.slug}`} className="group block">
               {/* single image container */}
-              <div className="h-[320px] overflow-hidden rounded-2xl bg-zinc-100">
+              <div className="h-[480px] overflow-hidden rounded-2xl bg-zinc-100">
                 {p.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -184,32 +149,32 @@ export default function WorkSection() {
                 )}
               </div>
 
-              {/* title */}
-              <h3 className="mt-6 max-w-[560px]" style={t(type.caseH2)}>
-                {p.title}
-              </h3>
+              {/* title + company logo · name · year in one row (auto gap) */}
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                {/* title */}
+                <h3
+                  className="max-w-[560px]"
+                  style={{ ...t(type.caseH2), fontSize: 18, lineHeight: "26px", color: "#1D2539" }}
+                >
+                  {p.title}
+                </h3>
 
-              {/* company logo · name · year */}
-              <div className="mt-3 flex items-center gap-2.5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={p.logo}
-                  alt=""
-                  className="h-6 w-6 shrink-0 rounded-md object-cover ring-1 ring-black/5"
-                />
-                <span
-                  className="font-mono uppercase"
-                  style={{ fontSize: 13, letterSpacing: "0.02em", color: colors.tertiary }}
-                >
-                  {p.company}
-                </span>
-                <span style={{ color: colors.tertiary }}>·</span>
-                <span
-                  className="font-mono uppercase"
-                  style={{ fontSize: 13, letterSpacing: "0.02em", color: colors.tertiary }}
-                >
-                  {p.year}
-                </span>
+                {/* company logo · name · year */}
+                <div className="flex shrink-0 items-center gap-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.logo}
+                    alt=""
+                    className="h-5 w-5 shrink-0 rounded object-cover ring-1 ring-black/5"
+                  />
+                  <span style={{ fontSize: 14, color: colors.tertiary }}>
+                    {p.company}
+                  </span>
+                  <span style={{ color: colors.tertiary }}>·</span>
+                  <span style={{ fontSize: 14, color: colors.tertiary }}>
+                    {p.year}
+                  </span>
+                </div>
               </div>
             </Link>
           ))}

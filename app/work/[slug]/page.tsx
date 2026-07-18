@@ -35,9 +35,12 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Case-study paragraph body — muted tertiary tone across the whole page.
+const BODY_COLOR = colors.tertiary;
+
 function Body({ children }: { children: React.ReactNode }) {
   return (
-    <p className="max-w-[560px]" style={t(type.aboutBody)}>
+    <p className="max-w-[560px]" style={{ ...t(type.aboutBody), color: BODY_COLOR }}>
       {children}
     </p>
   );
@@ -75,7 +78,7 @@ export default async function CaseStudyPage({
             <span>·</span>
             <span>{project.year}</span>
           </div>
-          <h1 className="max-w-[640px]" style={t(type.headline)}>
+          <h1 className="w-full" style={{ ...t(type.headline), fontSize: 28 }}>
             {project.title}
           </h1>
           <div className="mt-6">
@@ -92,8 +95,8 @@ export default async function CaseStudyPage({
             </div>
           ) : null}
 
-          <div className="mt-10 flex flex-wrap gap-x-16 gap-y-6">
-            <div>
+          <div className="mt-10 flex h-fit flex-wrap gap-x-16 gap-y-6">
+            <div className="flex shrink-0 flex-col self-start">
               <Eyebrow>Role</Eyebrow>
               <p style={t(type.expOrg)}>{project.role}</p>
             </div>
@@ -135,7 +138,7 @@ export default async function CaseStudyPage({
                 </span>
                 <div>
                   <h3 style={t(type.caseH3)}>{pt.title}</h3>
-                  <p className="mt-1.5 max-w-[520px]" style={t(type.aboutBody)}>
+                  <p className="mt-1.5 max-w-[520px]" style={{ ...t(type.aboutBody), color: BODY_COLOR }}>
                     {pt.body}
                   </p>
                 </div>
@@ -171,7 +174,7 @@ export default async function CaseStudyPage({
             {project.outcomes.metrics.map((m) => (
               <div key={m.label} className="rounded-2xl bg-zinc-50 p-6">
                 <div style={t(type.caseMetric)}>{m.value}</div>
-                <p className="mt-2" style={{ ...t(type.expMeta), color: colors.tertiary }}>
+                <p className="mt-2" style={{ ...t(type.expMeta), color: "#666D85" }}>
                   {m.label}
                 </p>
               </div>
@@ -195,7 +198,7 @@ export default async function CaseStudyPage({
             {project.solution.sections.map((s) => (
               <div key={s.title}>
                 <h3 style={t(type.caseH3)}>{s.title}</h3>
-                <p className="mt-2 max-w-[560px]" style={t(type.aboutBody)}>
+                <p className="mt-2 max-w-[560px]" style={{ ...t(type.aboutBody), color: BODY_COLOR }}>
                   {s.body}
                 </p>
                 {s.media || s.image || s.images ? (
@@ -235,12 +238,6 @@ export default async function CaseStudyPage({
               />
             </div>
           ) : null}
-
-          <div className="mt-10 rounded-2xl bg-zinc-900 px-6 py-5">
-            <p className="italic" style={{ ...t(type.aboutBody), color: "#e7e5e4" }}>
-              💡 {project.process.note}
-            </p>
-          </div>
         </section>
 
         <Footer />

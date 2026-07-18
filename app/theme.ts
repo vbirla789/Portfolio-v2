@@ -79,7 +79,7 @@ export const type: Record<string, TypeToken> = {
   // Case study — sub-heading (H3)
   caseH3: { size: 17, weight: 500, lineHeight: 24, tracking: -0.01, color: colors.primary },
   // Case study — big outcome metric number
-  caseMetric: { size: 32, weight: 600, lineHeight: 36, tracking: -0.02, color: colors.primary },
+  caseMetric: { size: 32, weight: 500, lineHeight: 36, tracking: -0.02, color: colors.primary },
 };
 
 /* ---- helper: turn a token into a React inline-style object -----------------*/
