@@ -69,11 +69,9 @@ const experience: {
   },
 ];
 
-const funCards = [
-  "Customizing Android phones",
-  "Sketching random ideas",
-  "Playing with code & AI",
-  "Building tiny tools",
+const funVideos = [
+  { src: "/fun/experiment-1.mp4", title: "Expense Tracker", year: "2026" },
+  { src: "/fun/experiment-2.mp4", title: "Editing Experience", year: "2026" },
 ];
 
 /* ---------- building blocks ---------- */
@@ -167,11 +165,11 @@ export default function WorkSection() {
                     alt=""
                     className="h-5 w-5 shrink-0 rounded object-cover ring-1 ring-black/5"
                   />
-                  <span style={{ fontSize: 14, color: colors.tertiary }}>
+                  <span style={{ fontSize: 14, color: colors.secondary }}>
                     {p.company}
                   </span>
-                  <span style={{ color: colors.tertiary }}>·</span>
-                  <span style={{ fontSize: 14, color: colors.tertiary }}>
+                  <span style={{ color: colors.secondary }}>·</span>
+                  <span style={{ fontSize: 14, color: colors.secondary }}>
                     {p.year}
                   </span>
                 </div>
@@ -206,21 +204,31 @@ export default function WorkSection() {
 
       {/* FUN */}
       <Section id="fun" label="Fun">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {funCards.map((f, i) => (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {funVideos.map((v) => (
             <div
-              key={f}
-              className="flex h-32 items-end rounded-2xl p-4 text-[14px] font-medium text-white"
-              style={{
-                background: [
-                  "linear-gradient(135deg,#7c5cff,#a78bfa)",
-                  "linear-gradient(135deg,#f97316,#fb923c)",
-                  "linear-gradient(135deg,#111,#3f3f46)",
-                  "linear-gradient(135deg,#0ea5e9,#38bdf8)",
-                ][i % 4],
-              }}
+              key={v.src}
+              className="flex flex-col gap-10 rounded-2xl bg-zinc-50 p-6 ring-1 ring-black/5"
             >
-              {f}
+              {/* video — shown in full, correct iPhone aspect (no crop) */}
+              <div className="flex justify-center">
+                <video
+                  className="h-[460px] w-auto rounded-[22px] object-contain"
+                  src={v.src}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+              </div>
+              {/* title + year */}
+              <div className="flex items-center justify-between">
+                <span style={t(type.projectTitle)}>{v.title}</span>
+                <span style={{ ...t(type.expMeta), color: colors.tertiary }}>
+                  {v.year}
+                </span>
+              </div>
             </div>
           ))}
         </div>
