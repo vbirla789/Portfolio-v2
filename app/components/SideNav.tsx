@@ -5,7 +5,8 @@ import { colors } from "../theme";
 import { playHover, playScroll, preloadAudio, primeAudio } from "../lib/sound";
 
 // `href` items open in a new tab instead of scroll-spying to a section.
-const RESUME_URL = "/resume.pdf"; // placeholder — swap for the shared résumé link
+const RESUME_URL =
+  "https://drive.google.com/file/d/17jfbs3ojoWpwSnKUT1ErsFzIxUUO3_SH/view?usp=sharing";
 
 const items: { id: string; label: string; href?: string }[] = [
   { id: "about", label: "About" },
