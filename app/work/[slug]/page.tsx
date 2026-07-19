@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Appear from "../../components/Appear";
 import BackButton from "../../components/BackButton";
 import CaseStudyNav from "../../components/CaseStudyNav";
 import Footer from "../../components/Footer";
@@ -78,56 +79,67 @@ export default async function CaseStudyPage({
           <div className="mb-6 lg:hidden">
             <BackButton />
           </div>
-          <div className="mb-3 flex items-center gap-2" style={t(type.projectMeta)}>
-            <span>{project.company}</span>
-            <span>·</span>
-            <span>{project.year}</span>
-          </div>
-          <h1
-            className="w-full"
-            style={{ ...t(type.headline), fontSize: "clamp(1.375rem, 5.5vw, 1.75rem)", lineHeight: 1.25 }}
-          >
-            {project.title}
-          </h1>
-          <div className="mt-6">
-            <Body>{project.overview}</Body>
-          </div>
+          {/* title appears first */}
+          <Appear>
+            <div className="mb-3 flex items-center gap-2" style={t(type.projectMeta)}>
+              <span>{project.company}</span>
+              <span>·</span>
+              <span>{project.year}</span>
+            </div>
+            <h1
+              className="w-full"
+              style={{ ...t(type.headline), fontSize: "clamp(1.375rem, 5.5vw, 1.75rem)", lineHeight: 1.25 }}
+            >
+              {project.title}
+            </h1>
+          </Appear>
+
+          <Appear delay={0.14}>
+            <div className="mt-6">
+              <Body>{project.overview}</Body>
+            </div>
+          </Appear>
 
           {project.hero ? (
-            <div className="mt-10">
-              <CaseMedia
-                image={project.hero.image}
-                media={project.hero.media}
-                video={project.hero.video}
-                alt={`${project.company} overview`}
-              />
-            </div>
+            <Appear delay={0.24}>
+              <div className="mt-10">
+                <CaseMedia
+                  image={project.hero.image}
+                  media={project.hero.media}
+                  video={project.hero.video}
+                  alt={`${project.company} overview`}
+                />
+              </div>
+            </Appear>
           ) : null}
 
-          <div className="mt-10 flex h-fit flex-wrap gap-x-16 gap-y-6">
-            <div className="flex shrink-0 flex-col self-start">
-              <Eyebrow>Role</Eyebrow>
-              <p style={t(type.expOrg)}>{project.role}</p>
-            </div>
-            {project.collaborators.length > 0 ? (
-              <div>
-                <Eyebrow>Collaborators</Eyebrow>
-                <div className="flex flex-col gap-1">
-                  {project.collaborators.map((c) => (
-                    <span key={c} style={t(type.expCompany)}>
-                      {c}
-                    </span>
-                  ))}
-                </div>
+          <Appear delay={0.32}>
+            <div className="mt-10 flex h-fit flex-wrap gap-x-16 gap-y-6">
+              <div className="flex shrink-0 flex-col self-start">
+                <Eyebrow>Role</Eyebrow>
+                <p style={t(type.expOrg)}>{project.role}</p>
               </div>
-            ) : null}
-          </div>
+              {project.collaborators.length > 0 ? (
+                <div>
+                  <Eyebrow>Collaborators</Eyebrow>
+                  <div className="flex flex-col gap-1">
+                    {project.collaborators.map((c) => (
+                      <span key={c} style={t(type.expCompany)}>
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </Appear>
         </section>
 
         <div className="my-16 h-px w-full" style={{ background: colors.line }} />
 
         {/* ---------------- Problem ---------------- */}
         <section id="problem" className="scroll-mt-28">
+          <Appear inView>
           <Eyebrow>Problem</Eyebrow>
           <h2
             className="max-w-[600px]"
@@ -168,6 +180,7 @@ export default async function CaseStudyPage({
               />
             </div>
           ) : null}
+          </Appear>
         </section>
 
         {project.outcomes ? (
@@ -176,6 +189,7 @@ export default async function CaseStudyPage({
 
             {/* ---------------- Outcomes ---------------- */}
             <section id="outcomes" className="scroll-mt-28">
+              <Appear inView>
               <Eyebrow>Outcomes</Eyebrow>
               <h2
             className="max-w-[600px]"
@@ -197,6 +211,7 @@ export default async function CaseStudyPage({
                   </div>
                 ))}
               </div>
+              </Appear>
             </section>
           </>
         ) : null}
@@ -205,6 +220,7 @@ export default async function CaseStudyPage({
 
         {/* ---------------- Solution ---------------- */}
         <section id="solution" className="scroll-mt-28">
+          <Appear inView>
           <Eyebrow>Solution</Eyebrow>
           <h2
             className="max-w-[600px]"
@@ -271,6 +287,7 @@ export default async function CaseStudyPage({
               </div>
             ))}
           </div>
+          </Appear>
         </section>
 
         {/* ---------------- AI Experiments ---------------- */}
@@ -278,6 +295,7 @@ export default async function CaseStudyPage({
           <>
             <div className="my-16 h-px w-full" style={{ background: colors.line }} />
             <section id="experiments" className="scroll-mt-28">
+              <Appear inView>
               <Eyebrow>AI Experiments</Eyebrow>
               <h2
                 className="max-w-[600px]"
@@ -302,6 +320,7 @@ export default async function CaseStudyPage({
                   AI-prototype videos to be added here
                 </div>
               )}
+              </Appear>
             </section>
           </>
         ) : null}
@@ -310,6 +329,7 @@ export default async function CaseStudyPage({
 
         {/* ---------------- Process ---------------- */}
         <section id="process" className="scroll-mt-28">
+          <Appear inView>
           <Eyebrow>Process</Eyebrow>
           <h2
             className="max-w-[600px]"
@@ -330,9 +350,12 @@ export default async function CaseStudyPage({
               />
             </div>
           ) : null}
+          </Appear>
         </section>
 
-        <Footer />
+        <Appear inView>
+          <Footer />
+        </Appear>
       </main>
     </>
   );
