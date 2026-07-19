@@ -91,9 +91,9 @@ function LogoMark({ src, alt }: { src: string; alt: string }) {
     <img
       src={src}
       alt={`${alt} logo`}
-      width={32}
-      height={32}
-      className="h-8 w-8 shrink-0 rounded-[8px] object-cover ring-1 ring-black/5"
+      width={36}
+      height={36}
+      className="h-9 w-9 shrink-0 rounded-[8px] object-cover ring-1 ring-black/5"
     />
   );
 }
@@ -168,11 +168,11 @@ export default function WorkSection() {
 
                 {/* company logo · name · year */}
                 <div className="flex shrink-0 items-center gap-2">
-                  <span style={{ fontSize: 14, color: colors.secondary }}>
+                  <span style={{ fontSize: 16, color: colors.secondary }}>
                     {p.company}
                   </span>
                   <span style={{ color: colors.secondary }}>·</span>
-                  <span style={{ fontSize: 13, color: colors.secondary }}>
+                  <span style={{ fontSize: 15, color: colors.secondary }}>
                     {p.year}
                   </span>
                 </div>
@@ -184,22 +184,33 @@ export default function WorkSection() {
 
       {/* EXPERIENCE */}
       <Section id="experience" label="Experience">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col border-t border-black/5">
           {experience.map((e) => (
             <div
               key={e.company + e.role}
-              className="flex items-start justify-between gap-4"
+              className="grid grid-cols-1 gap-1 border-b border-black/5 py-4 sm:grid-cols-[240px_1fr_auto] sm:items-center sm:gap-4"
             >
-              <div>
-                <h3 style={t(type.expOrg)}>{e.role}</h3>
-                <div className="mt-2 flex items-center gap-2.5">
-                  <LogoMark src={e.logo} alt={e.company} />
-                  <span style={t(type.expCompany)}>{e.company}</span>
-                </div>
+              {/* logo + company */}
+              <div className="flex items-center gap-3.5">
+                <LogoMark src={e.logo} alt={e.company} />
+                <span style={{ fontSize: 16, fontWeight: 500, color: colors.primary }}>
+                  {e.company}
+                </span>
               </div>
-              <div className="whitespace-nowrap" style={t(type.expMeta)}>
+              {/* role */}
+              <span
+                className="justify-self-start"
+                style={{ fontSize: 16, fontWeight: 500, color: colors.primary }}
+              >
+                {e.role}
+              </span>
+              {/* period */}
+              <span
+                className="whitespace-nowrap sm:text-right"
+                style={{ fontSize: 15, color: colors.tertiary }}
+              >
                 {e.period}
-              </div>
+              </span>
             </div>
           ))}
         </div>
