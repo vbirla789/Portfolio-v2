@@ -1,7 +1,6 @@
 /* ----------------------------------------------------------------------------
  * Case-study content for the Work section detail pages.
- * All copy here is placeholder / dummy — swap for real narrative + assets later.
- * Structure mirrors a strong case study: Problem → Outcomes → Solution → Process.
+ * Structure: Problem → (Outcomes) → Solution → (AI Experiments) → Process.
  * --------------------------------------------------------------------------*/
 
 export type Metric = { value: string; label: string };
@@ -64,7 +63,7 @@ export const projects: Project[] = [
       "Siddhant Ghosh (SPD)",
       "Saransh Rawat (MD)",
     ],
-    hero: { video: "/work/noon/proto.mp4" },
+    hero: { video: "/work/noon/ai-1.mp4" },
     problem: {
       heading: "Almost every review on noon is a single star tap",
       body: "Photo and text reviews are what actually move shoppers — photo-review viewers add to cart at nearly 2× the PDP average. But the flow to create them is so heavy that most people stop at the star.",
@@ -114,11 +113,10 @@ export const projects: Project[] = [
     experiments: {
       heading: "Pushing the flow further with AI",
       body: "Beyond the shipped feature, I love prototyping with AI to explore what an AI-assisted review experience could become. A few of the experiments I built on top of this design:",
-      videos: ["/work/noon/ai-1.mp4"],
+      videos: ["/work/noon/proto.mp4"],
     },
     process: {
-      // TODO: attach the prototype + usability findings here.
-      heading: "Testing & rollout",
+      heading: "A design system, heading into testing",
       body: "I built a design system for the flow — chips, toggles, AI states, photo-upload states, and review cards — so every screen stays consistent as the feature scales. It's in development now, heading into usability testing.",
       images: ["/work/noon/system.png"],
       note: "",
@@ -128,7 +126,7 @@ export const projects: Project[] = [
     slug: "ambitio",
     company: "Ambitio",
     year: "2025",
-    role: "Product Designer — end-to-end",
+    role: "Product Designer Intern",
     title: "Rebuilding Ambitio's dashboard to drive 14% more adoption",
     overview:
       "Ambitio helps students applying abroad go from 'where do I even start' to a submitted application. I redesigned the core dashboard end-to-end — the flow where students discover programs, track applications, and prepare their documents — turning a dense, feature-heavy product into a clear, guided journey.",
@@ -208,7 +206,7 @@ export const projects: Project[] = [
     slug: "fibr",
     company: "Fibr.ai",
     year: "2025",
-    role: "Website design & Framer development — end-to-end",
+    role: "Product Designer (Contract)",
     title: "A Framer CMS that scaled Fibr.ai's traffic by 35%",
     overview:
       "At Fibr.ai, I led the design and development of their complete website infrastructure built on Framer — including agent-specific pages for Liv, Max, and Aya, and a scalable CMS for conversion rate optimization across all 50 US states.",
