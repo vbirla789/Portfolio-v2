@@ -24,62 +24,18 @@ function scheduleFractionIST(date: Date) {
 
 type Card = { rotate: number; render: React.ReactNode };
 
-/* Styled placeholder previews that echo the reference polaroids. */
+/* Photos shown in the draggable timeline polaroids. */
+const photo = (src: string) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img src={src} alt="" className="h-full w-full object-cover" />
+);
+
 const cards: Card[] = [
-  {
-    rotate: -6,
-    render: (
-      <div className="relative h-full w-full bg-[#f3f1fb]">
-        <div className="absolute left-1 top-1 h-3 w-4 rounded-[1px] bg-[#d6cdf7]" />
-        <div className="absolute right-1 top-1 h-3 w-4 rounded-[1px] bg-[#cabff2]" />
-        <div className="absolute left-1/2 top-1 h-6 w-px -translate-x-1/2 bg-[#7c5cff]" />
-        <div className="absolute bottom-1 left-2 h-0 w-0 border-l-[6px] border-l-black border-t-[8px] border-t-transparent border-b-[2px] border-b-transparent rotate-[15deg]" />
-      </div>
-    ),
-  },
-  {
-    rotate: 3,
-    render: (
-      <div className="relative h-full w-full bg-white">
-        <div className="absolute left-1 top-1 text-[5px] font-semibold text-[#7c5cff]">
-          ✦ App/Buttons
-        </div>
-        <div className="absolute inset-x-1 top-4 bottom-1 rounded-[2px] border border-dashed border-[#c4b7f5]" />
-        <div className="absolute bottom-2 left-1/2 h-4 w-6 -translate-x-1/2 rounded-[2px] bg-[#6d4dff]" />
-      </div>
-    ),
-  },
-  {
-    rotate: -3,
-    render: (
-      <div className="relative h-full w-full bg-[#161616]">
-        <div className="absolute inset-x-1 top-1 h-1 rounded-full bg-[#333]" />
-        <div className="absolute left-1 top-3 flex items-end gap-[2px]">
-          {[5, 9, 6, 11, 7, 10].map((h, i) => (
-            <div
-              key={i}
-              style={{ height: h, backgroundColor: colors.accent }}
-              className="w-[2px] rounded-full"
-            />
-          ))}
-        </div>
-        <div className="absolute bottom-1 left-1 h-1.5 w-1.5 rounded-full bg-white" />
-        <div className="absolute bottom-1 right-1 h-1.5 w-1.5 rounded-full bg-[#333]" />
-      </div>
-    ),
-  },
-  {
-    rotate: 5,
-    render: (
-      <div className="h-full w-full bg-gradient-to-br from-[#4b5563] via-[#374151] to-[#111827]" />
-    ),
-  },
-  {
-    rotate: -4,
-    render: (
-      <div className="h-full w-full bg-gradient-to-t from-[#f97316] via-[#fb923c] to-[#334155]" />
-    ),
-  },
+  { rotate: -6, render: photo("/timeline/1.jpg") },
+  { rotate: 3, render: photo("/timeline/2.jpg") },
+  { rotate: -3, render: photo("/timeline/3.jpg") },
+  { rotate: 5, render: photo("/timeline/4.jpg") },
+  { rotate: -4, render: photo("/timeline/5.jpg") },
 ];
 
 // horizontal center of each card, as a % across the panel
@@ -233,7 +189,7 @@ export default function TimelineWidget() {
                 className="rounded-[4px] border px-[3px] pb-[7px] pt-[3px]"
                 style={{ backgroundColor: colors.panel, borderColor: colors.line }}
               >
-                <div className="h-[42px] w-[40px] overflow-hidden rounded-[2px]">
+                <div className="h-[46px] w-[44px] overflow-hidden rounded-[2px]">
                   {card.render}
                 </div>
               </div>

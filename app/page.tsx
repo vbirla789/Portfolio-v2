@@ -39,7 +39,7 @@ export default function Home() {
             </p>
             <p style={t(type.aboutBody)}>
               I love shaping how things look, then bringing them to life with the
-              help of <span className="font-semibold">AI</span> — always
+              help of <span className="font-semibold">AI</span>, always
               experimenting to turn the designs I create into living, interactive
               experiences.
             </p>
