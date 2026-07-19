@@ -56,7 +56,7 @@ export const projects: Project[] = [
     company: "noon",
     year: "2026",
     role: "Product Designer Intern",
-    title: "Designing an AI-assisted reviews & ratings flow",
+    title: "Designing an AI-assisted review flow to add a review in seconds",
     overview:
       "On noon, reviews are the cheapest salesperson — they replace in-store trust at scale, weed out weak catalog, and help good products rank. I redesigned the review-submission flow so a helpful, media-rich review takes seconds, not effort.",
     collaborators: [

@@ -22,7 +22,7 @@ const projects: Project[] = [
     company: "noon",
     year: "2026",
     logo: "/logos/noon.jpeg",
-    title: "Designing an AI-assisted reviews & ratings flow",
+    title: "Designing an AI-assisted review flow to add a review in seconds",
     image: "/work/noon/preview.png",
   },
   {
