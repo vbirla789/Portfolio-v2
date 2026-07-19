@@ -38,11 +38,11 @@ export default function Home() {
           {/* description */}
           <Appear delay={0.14}>
             <div className="mt-4 space-y-4">
-              <p style={t(type.aboutBody)}>
+              <p style={{ ...t(type.aboutBody), fontWeight: 400 }}>
                 I&apos;m a product designer based out of India, currently working
                 at <span className="font-semibold">noon</span>.
               </p>
-              <p style={t(type.aboutBody)}>
+              <p style={{ ...t(type.aboutBody), fontWeight: 400 }}>
                 I love shaping how things look, then bringing them to life with the
                 help of <span className="font-semibold">AI</span>, always
                 experimenting to turn the designs I create into living, interactive
