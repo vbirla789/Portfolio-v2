@@ -194,7 +194,7 @@ export default function WorkSection() {
           {experience.map((e) => (
             <div
               key={e.company + e.role}
-              className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4"
+              className="flex items-start justify-between gap-4"
             >
               <div>
                 <h3 style={t(type.expOrg)}>{e.role}</h3>

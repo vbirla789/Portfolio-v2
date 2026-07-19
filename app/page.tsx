@@ -14,29 +14,36 @@ export default function Home() {
           <TimelineWidget />
         </div>
 
-        {/* hero */}
-        <h1
-          className="mt-12 max-w-[820px] sm:mt-16"
-          style={{ ...t(type.headline), fontSize: "clamp(1.5rem, 6.5vw, 2rem)", lineHeight: 1.2 }}
-        >
-          Vishal Birla is a Product Designer &amp; Framer Expert.
-        </h1>
-
-        {/* about */}
-        <section id="about" className="mt-14 max-w-[640px] scroll-mt-28">
-          <p className="mb-3 font-mono uppercase" style={t(type.aboutLabel)}>
+        {/* about / intro */}
+        <section id="about" className="mt-12 max-w-[640px] scroll-mt-28 sm:mt-16">
+          <p className="mb-4 font-mono uppercase" style={t(type.aboutLabel)}>
             About
           </p>
-          <p style={t(type.aboutBody)}>
-            Vishal is a Product Designer at Ambitio, where he builds edtech and AI
-            products used by thousands of learners. An engineer-turned-designer, he
-            designs in Figma and prototypes in Framer.
-          </p>
-          <p className="mt-5" style={t(type.aboutBody)}>
-            He loves building with AI and playing with code to bring ideas to life,
-            and believes the best design is the kind you don&apos;t notice — you just
-            get your thing done and move on.
-          </p>
+
+          {/* name (title) */}
+          <h1
+            style={{
+              ...t(type.headline),
+              fontSize: "clamp(1.5rem, 5vw, 1.75rem)",
+              lineHeight: 1.2,
+            }}
+          >
+            Vishal Birla
+          </h1>
+
+          {/* description */}
+          <div className="mt-4 space-y-4">
+            <p style={t(type.aboutBody)}>
+              I&apos;m a design engineer (design + code) based out of India,
+              currently working at{" "}
+              <span className="font-semibold">noon</span>.
+            </p>
+            <p style={t(type.aboutBody)}>
+              I like shaping how things look, then bringing them to life with
+              code — and I&apos;m a{" "}
+              <span className="font-semibold">Framer expert</span> too.
+            </p>
+          </div>
 
           {/* crafted experiences at — client / company logos */}
           <div className="mt-9">
