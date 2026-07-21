@@ -54,25 +54,25 @@ const experience: {
   {
     role: "Product Designer Intern",
     company: "noon",
-    period: "May 2026 to present",
+    period: "May 2026 - present",
     logo: "/logos/noon.jpeg",
   },
   {
     role: "Product Designer Intern",
     company: "Ambitio",
-    period: "July 2025 to April 2026",
+    period: "July 2025 - April 2026",
     logo: "/logos/ambitio.avif",
   },
   {
     role: "Product Designer (Contract)",
     company: "Fibr.ai",
-    period: "April 2025 to July 2025",
+    period: "April 2025 - July 2025",
     logo: "/logos/fibr.avif",
   },
   {
     role: "Product Designer Intern",
     company: "DZINR",
-    period: "Jan 2025 to April 2025",
+    period: "Jan 2025 - April 2025",
     logo: "/logos/dzinr.avif",
   },
 ];

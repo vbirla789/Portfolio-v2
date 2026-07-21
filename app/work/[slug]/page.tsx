@@ -148,9 +148,11 @@ function StoryBlock({ section, company }: { section: StorySection; company: stri
       <section id={section.id} className="scroll-mt-28">
         <Appear inView>
           <Eyebrow>{section.eyebrow}</Eyebrow>
-          <h2 className="max-w-[600px]" style={H2_STYLE}>
-            {section.heading}
-          </h2>
+          {section.heading ? (
+            <h2 className="max-w-[600px]" style={H2_STYLE}>
+              {section.heading}
+            </h2>
+          ) : null}
           {section.body ? (
             <div className="mt-5">
               <Body>{section.body}</Body>
@@ -160,17 +162,45 @@ function StoryBlock({ section, company }: { section: StorySection; company: stri
             <MediaBlock media={section.media} alt={`${company} ${section.navLabel}`} />
           ) : null}
 
+          {section.briefs && section.briefs.length > 0 ? (
+            <div className="mt-8 flex flex-col gap-7">
+              {section.briefs.map((b) => (
+                <div key={b.label}>
+                  <p
+                    className="mb-2"
+                    style={{ fontSize: 20, fontWeight: 500, color: colors.primary }}
+                  >
+                    {b.label}
+                  </p>
+                  <p className="max-w-[560px]" style={ITEM_BODY_STYLE}>
+                    <RichText text={b.body} />
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : null}
+
           {section.items && section.items.length > 0 ? (
-            <div className="mt-14 flex flex-col gap-16">
+            <div className={`flex flex-col gap-16 ${section.heading ? "mt-14" : "mt-6"}`}>
               {section.items.map((it, idx) => (
                 <div key={it.title ?? idx}>
                   {it.title ? (
-                    <h3 style={{ ...t(type.caseH3), fontSize: 20 }}>{it.title}</h3>
+                    section.bigItemTitles ? (
+                      <h2 className="max-w-[600px]" style={H2_STYLE}>
+                        {it.title}
+                      </h2>
+                    ) : (
+                      <h3 style={{ ...t(type.caseH3), fontSize: 20 }}>{it.title}</h3>
+                    )
                   ) : null}
                   {it.body ? (
-                    <p className="mt-2 max-w-[560px]" style={ITEM_BODY_STYLE}>
-                      <RichText text={it.body} />
-                    </p>
+                    <div className="mt-2 flex max-w-[560px] flex-col gap-4">
+                      {it.body.split("\n\n").map((para, pi) => (
+                        <p key={pi} style={ITEM_BODY_STYLE}>
+                          <RichText text={para} />
+                        </p>
+                      ))}
+                    </div>
                   ) : null}
                   {it.bullets && it.bullets.length > 0 ? (
                     <ul className="mt-4 flex max-w-[560px] flex-col gap-3">

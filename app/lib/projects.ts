@@ -49,10 +49,15 @@ export type StorySection = {
   id: string;
   navLabel: string;
   eyebrow: string;
-  heading: string;
+  heading?: string;
   body?: string;
   media?: StoryMedia;
+  // Small bold-labelled paragraphs (e.g. Problem / Solution) shown under the heading.
+  briefs?: { label: string; body: string }[];
   items?: StoryItem[];
+  // When true, each item's title renders at the section-heading level (used when
+  // the section itself has no heading, so items become the top-level headings).
+  bigItemTitles?: boolean;
   videos?: string[];
 };
 
@@ -108,7 +113,7 @@ export const projects: Project[] = [
         id: "context",
         navLabel: "Context",
         eyebrow: "Context",
-        heading: "Reviews are noon's cheapest salesperson",
+        bigItemTitles: true,
         items: [
           {
             title: "What is noon?",
@@ -136,18 +141,18 @@ export const projects: Project[] = [
         items: [
           {
             title: "What the best apps do differently",
-            body: "Inside e-commerce, there was barely any innovation to borrow: across **Amazon**, **Myntra**, and **Meesho**, every review flow looked more or less the same, a star rating, a blank text box, and an add-photos container. The fresh thinking was elsewhere. Apps like **Bolt**, **AllTrails**, and **TripAdvisor** break a review into a few tappable questions instead of a blank page, and that guided-prompt approach is what we set out to bring to noon.",
+            body: "Inside e-commerce, there was barely any innovation to borrow: across **Amazon**, **Myntra**, and **Meesho**, every review flow looked more or less the same, a star rating, a blank text box, and an add-photos container.\n\nThe fresh thinking was elsewhere. Apps like **Bolt**, **AllTrails**, and **TripAdvisor** break a review into a few tappable questions instead of a blank page, and that guided-prompt approach is what we set out to bring to noon.",
             media: {
               image: "/work/noon/competitive.png",
             },
           },
           {
             title: "What shoppers actually told us",
-            body: "Talking to buyers, one line repeated almost word for word: “I'd happily rate it, but I don't have time to write a paragraph.” The intent to help was there; the effort just wasn't worth the payoff.",
+            body: "When we talked to friends and people on the team, the same feedback kept surfacing: they just don't write reviews. From their point of view it's a **high-effort, low-impact** task, a lot of typing for little payoff, so the intent to help never turns into an actual review.",
           },
           {
             title: "Naming the real blocker",
-            body: "Putting it together, the problem wasn't motivation. It was the blank text box. The moment the flow asked people to write, they left. So the thing to design away was effort, not intent. That reframing set up everything that followed.",
+            body: "It was the blank text box: writing feels like real effort, because very few people are comfortable putting their thoughts into words.",
           },
         ],
       },
@@ -156,7 +161,16 @@ export const projects: Project[] = [
         navLabel: "The idea",
         eyebrow: "The problem & the idea",
         heading: "Turn writing into tapping",
-        body: "The problem in one line: ~4 in 5 reviews are a single star tap, and fewer than 1 in 25 includes a photo, the exact content that sells. The satisfied majority rates and leaves, so the picture skews to the extremes. The bet: if writing a review feels like tapping, that quiet majority will finally contribute. So the new flow lets people tap rating-aware chips, and AI turns those taps into a real, first-person review.",
+        briefs: [
+          {
+            label: "Problem",
+            body: "Most shoppers rate but never write, because a full review feels like effort. So the photo-and-text reviews that actually sell rarely get created.",
+          },
+          {
+            label: "Solution",
+            body: "Make writing feel like tapping. Shoppers pick a few rating-aware chips and AI turns them into a real, first-person review they can post in seconds.",
+          },
+        ],
         items: [
           {
             title: "Rating-aware question chips",
