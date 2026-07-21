@@ -187,7 +187,7 @@ export default function TimelineWidget() {
                 type="button"
                 onClick={() => setLightboxIndex(i)}
                 aria-label="Open photo"
-                className="block cursor-pointer rounded-[4px] border px-[3px] pb-[7px] pt-[3px] outline-none transition-shadow hover:shadow-md"
+                className="block cursor-pointer rounded-[4px] border px-[3px] pb-[7px] pt-[3px] outline-none transition-shadow hover:shadow-sm"
                 style={{ backgroundColor: colors.panel, borderColor: colors.line }}
               >
                 <div className="h-[56px] w-[52px] overflow-hidden rounded-[2px]">

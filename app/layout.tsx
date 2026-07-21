@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vishal Birla — Product Designer & Framer Expert",
+  title: "Vishal Birla · Product Designer & Framer Expert",
   description:
-    "Product designer based out of India, currently at noon. I shape how things look, then bring them to life with AI — and I'm a Framer expert too.",
+    "Product designer based out of India, currently at noon. I shape how things look, then bring them to life with AI, and I'm a Framer expert too.",
 };
 
 export default function RootLayout({

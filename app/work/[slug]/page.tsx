@@ -6,6 +6,7 @@ import CaseStudyNav from "../../components/CaseStudyNav";
 import Footer from "../../components/Footer";
 import { CaseMedia } from "../../components/caseMedia";
 import { getProject, projects } from "../../lib/projects";
+import type { StoryMedia, StorySection } from "../../lib/projects";
 import { colors, t, type } from "../../theme";
 
 export function generateStaticParams() {
@@ -55,6 +56,174 @@ function Caption({ children }: { children: React.ReactNode }) {
   );
 }
 
+const H2_STYLE = {
+  ...t(type.caseH2),
+  fontSize: "clamp(1.25rem, 5vw, 1.625rem)",
+  lineHeight: 1.25,
+} as React.CSSProperties;
+
+const ITEM_BODY_STYLE = {
+  ...t(type.aboutBody),
+  color: BODY_COLOR,
+  fontWeight: 400,
+} as React.CSSProperties;
+
+/** Renders text with **double-asterisk** spans as bold, emphasized in the primary tone. */
+function RichText({ text }: { text: string }) {
+  const parts = text.split(/\*\*(.+?)\*\*/g);
+  return (
+    <>
+      {parts.map((p, i) =>
+        i % 2 === 1 ? (
+          <strong key={i} style={{ fontWeight: 600, color: colors.primary }}>
+            {p}
+          </strong>
+        ) : (
+          <span key={i}>{p}</span>
+        ),
+      )}
+    </>
+  );
+}
+
+/** One media slot (image / images / video / placeholder) plus an optional caption. */
+function MediaBlock({ media, alt }: { media: StoryMedia; alt: string }) {
+  return (
+    <div className="mt-8">
+      <CaseMedia
+        image={media.image}
+        images={media.images}
+        video={media.video}
+        media={media.media}
+        placeholder={media.placeholder}
+        alt={alt}
+      />
+      {media.caption ? <Caption>{media.caption}</Caption> : null}
+    </div>
+  );
+}
+
+function DataTable({ table }: { table: { columns: string[]; rows: string[][] } }) {
+  return (
+    <div className="mt-6 max-w-[560px] overflow-x-auto rounded-xl ring-1 ring-black/5">
+      <table className="w-full text-left">
+        <thead>
+          <tr className="border-b border-black/5">
+            {table.columns.map((c) => (
+              <th
+                key={c}
+                className="px-4 py-3 font-mono text-[11px] font-medium uppercase tracking-wide"
+                style={{ color: colors.tertiary }}
+              >
+                {c}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-black/5">
+          {table.rows.map((row, ri) => (
+            <tr key={ri}>
+              {row.map((cell, ci) => (
+                <td
+                  key={ci}
+                  className="px-4 py-3 text-[14px]"
+                  style={{ color: ci === 0 ? colors.primary : BODY_COLOR }}
+                >
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/** A free-form story section for richer case studies (Context, Getting started, …). */
+function StoryBlock({ section, company }: { section: StorySection; company: string }) {
+  return (
+    <>
+      <div className="my-16 h-px w-full" style={{ background: colors.line }} />
+      <section id={section.id} className="scroll-mt-28">
+        <Appear inView>
+          <Eyebrow>{section.eyebrow}</Eyebrow>
+          <h2 className="max-w-[600px]" style={H2_STYLE}>
+            {section.heading}
+          </h2>
+          {section.body ? (
+            <div className="mt-5">
+              <Body>{section.body}</Body>
+            </div>
+          ) : null}
+          {section.media ? (
+            <MediaBlock media={section.media} alt={`${company} ${section.navLabel}`} />
+          ) : null}
+
+          {section.items && section.items.length > 0 ? (
+            <div className="mt-14 flex flex-col gap-16">
+              {section.items.map((it, idx) => (
+                <div key={it.title ?? idx}>
+                  {it.title ? (
+                    <h3 style={{ ...t(type.caseH3), fontSize: 20 }}>{it.title}</h3>
+                  ) : null}
+                  {it.body ? (
+                    <p className="mt-2 max-w-[560px]" style={ITEM_BODY_STYLE}>
+                      <RichText text={it.body} />
+                    </p>
+                  ) : null}
+                  {it.bullets && it.bullets.length > 0 ? (
+                    <ul className="mt-4 flex max-w-[560px] flex-col gap-3">
+                      {it.bullets.map((b, bi) => (
+                        <li key={bi} className="flex gap-3">
+                          <span
+                            className="mt-[10px] h-1.5 w-1.5 shrink-0 rounded-full"
+                            style={{ background: colors.tertiary }}
+                          />
+                          <p style={ITEM_BODY_STYLE}>
+                            <RichText text={b} />
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {it.table ? <DataTable table={it.table} /> : null}
+                  {it.media ? (
+                    <MediaBlock media={it.media} alt={it.title ?? company} />
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          ) : null}
+
+          {section.videos && section.videos.length > 0 ? (
+            <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
+              {section.videos.map((v) => (
+                <div
+                  key={v}
+                  className="flex justify-center rounded-2xl bg-zinc-50 p-4 ring-1 ring-black/5"
+                >
+                  <div className="overflow-hidden rounded-[22px]">
+                    <video
+                      className="block h-[320px] w-auto object-contain"
+                      src={v}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </Appear>
+      </section>
+    </>
+  );
+}
+
 export default async function CaseStudyPage({
   params,
 }: {
@@ -64,9 +233,24 @@ export default async function CaseStudyPage({
   const project = getProject(slug);
   if (!project) notFound();
 
+  // Side-nav items: driven by the story sections when present, else the fixed set.
+  const navItems = project.story
+    ? [
+        { id: "overview", label: "Overview" },
+        ...project.story.map((s) => ({ id: s.id, label: s.navLabel })),
+      ]
+    : [
+        { id: "overview", label: "Overview" },
+        { id: "problem", label: "Problem" },
+        { id: "outcomes", label: "Outcomes" },
+        { id: "solution", label: "Solution" },
+        { id: "experiments", label: "AI Experiments" },
+        { id: "process", label: "Process" },
+      ];
+
   return (
     <>
-      <CaseStudyNav />
+      <CaseStudyNav items={navItems} />
 
       <main className="mx-auto w-full max-w-[720px] px-6 pb-24 pt-20 sm:pb-32 sm:pt-28">
         {/* ---------------- Overview / header ---------------- */}
@@ -82,7 +266,7 @@ export default async function CaseStudyPage({
           {/* title appears first */}
           <Appear>
             <div className="mb-3 flex items-center gap-2" style={t(type.projectMeta)}>
-              <span>{project.company}</span>
+              <span style={{ fontSize: 15 }}>{project.company}</span>
               <span>·</span>
               <span>{project.year}</span>
             </div>
@@ -122,9 +306,9 @@ export default async function CaseStudyPage({
               {project.collaborators.length > 0 ? (
                 <div>
                   <Eyebrow>Collaborators</Eyebrow>
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-2">
                     {project.collaborators.map((c) => (
-                      <span key={c} style={t(type.expCompany)}>
+                      <span key={c} style={{ ...t(type.expCompany), fontSize: 15, color: "#1D2539" }}>
                         {c}
                       </span>
                     ))}
@@ -135,53 +319,58 @@ export default async function CaseStudyPage({
           </Appear>
         </section>
 
-        <div className="my-16 h-px w-full" style={{ background: colors.line }} />
+        {/* ---------------- Story sections (rich case studies, e.g. noon) ---------------- */}
+        {project.story?.map((s) => (
+          <StoryBlock key={s.id} section={s} company={project.company} />
+        ))}
 
         {/* ---------------- Problem ---------------- */}
-        <section id="problem" className="scroll-mt-28">
-          <Appear inView>
-          <Eyebrow>Problem</Eyebrow>
-          <h2
-            className="max-w-[600px]"
-            style={{ ...t(type.caseH2), fontSize: "clamp(1.25rem, 5vw, 1.625rem)", lineHeight: 1.25 }}
-          >
-            {project.problem.heading}
-          </h2>
-          <div className="mt-5">
-            <Body>{project.problem.body}</Body>
-          </div>
+        {project.problem ? (
+          <>
+            <div className="my-16 h-px w-full" style={{ background: colors.line }} />
+            <section id="problem" className="scroll-mt-28">
+              <Appear inView>
+              <Eyebrow>Problem</Eyebrow>
+              <h2 className="max-w-[600px]" style={H2_STYLE}>
+                {project.problem.heading}
+              </h2>
+              <div className="mt-5">
+                <Body>{project.problem.body}</Body>
+              </div>
 
-          <ol className="mt-10 flex flex-col gap-8">
-            {project.problem.points.map((pt, i) => (
-              <li key={pt.title} className="flex gap-4">
-                <span
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold"
-                  style={{ background: "#f4f4f5", color: colors.primary }}
-                >
-                  {i + 1}
-                </span>
-                <div>
-                  <h3 style={t(type.caseH3)}>{pt.title}</h3>
-                  <p className="mt-1.5 max-w-[520px]" style={{ ...t(type.aboutBody), color: BODY_COLOR, fontWeight: 400 }}>
-                    {pt.body}
-                  </p>
+              <ol className="mt-10 flex flex-col gap-8">
+                {project.problem.points.map((pt, i) => (
+                  <li key={pt.title} className="flex gap-4">
+                    <span
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold"
+                      style={{ background: "#f4f4f5", color: colors.primary }}
+                    >
+                      {i + 1}
+                    </span>
+                    <div>
+                      <h3 style={t(type.caseH3)}>{pt.title}</h3>
+                      <p className="mt-1.5 max-w-[520px]" style={ITEM_BODY_STYLE}>
+                        {pt.body}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+
+              {project.problem.media || project.problem.image || project.problem.images ? (
+                <div className="mt-10">
+                  <CaseMedia
+                    image={project.problem.image}
+                    images={project.problem.images}
+                    media={project.problem.media}
+                    alt={`${project.company} problem`}
+                  />
                 </div>
-              </li>
-            ))}
-          </ol>
-
-          {project.problem.media || project.problem.image || project.problem.images ? (
-            <div className="mt-10">
-              <CaseMedia
-                image={project.problem.image}
-                images={project.problem.images}
-                media={project.problem.media}
-                alt={`${project.company} problem`}
-              />
-            </div>
-          ) : null}
-          </Appear>
-        </section>
+              ) : null}
+              </Appear>
+            </section>
+          </>
+        ) : null}
 
         {project.outcomes ? (
           <>
@@ -216,9 +405,11 @@ export default async function CaseStudyPage({
           </>
         ) : null}
 
+        {/* ---------------- Solution ---------------- */}
+        {project.solution ? (
+          <>
         <div className="my-16 h-px w-full" style={{ background: colors.line }} />
 
-        {/* ---------------- Solution ---------------- */}
         <section id="solution" className="scroll-mt-28">
           <Appear inView>
           <Eyebrow>Solution</Eyebrow>
@@ -289,6 +480,8 @@ export default async function CaseStudyPage({
           </div>
           </Appear>
         </section>
+          </>
+        ) : null}
 
         {/* ---------------- AI Experiments ---------------- */}
         {project.experiments ? (
@@ -340,33 +533,33 @@ export default async function CaseStudyPage({
           </>
         ) : null}
 
-        <div className="my-16 h-px w-full" style={{ background: colors.line }} />
-
         {/* ---------------- Process ---------------- */}
-        <section id="process" className="scroll-mt-28">
-          <Appear inView>
-          <Eyebrow>Process</Eyebrow>
-          <h2
-            className="max-w-[600px]"
-            style={{ ...t(type.caseH2), fontSize: "clamp(1.25rem, 5vw, 1.625rem)", lineHeight: 1.25 }}
-          >
-            {project.process.heading}
-          </h2>
-          <div className="mt-5">
-            <Body>{project.process.body}</Body>
-          </div>
+        {project.process ? (
+          <>
+            <div className="my-16 h-px w-full" style={{ background: colors.line }} />
+            <section id="process" className="scroll-mt-28">
+              <Appear inView>
+              <Eyebrow>Process</Eyebrow>
+              <h2 className="max-w-[600px]" style={H2_STYLE}>
+                {project.process.heading}
+              </h2>
+              <div className="mt-5">
+                <Body>{project.process.body}</Body>
+              </div>
 
-          {project.process.media || project.process.images ? (
-            <div className="mt-10">
-              <CaseMedia
-                images={project.process.images}
-                media={project.process.media}
-                alt={`${project.company} process`}
-              />
-            </div>
-          ) : null}
-          </Appear>
-        </section>
+              {project.process.media || project.process.images ? (
+                <div className="mt-10">
+                  <CaseMedia
+                    images={project.process.images}
+                    media={project.process.media}
+                    alt={`${project.company} process`}
+                  />
+                </div>
+              ) : null}
+              </Appear>
+            </section>
+          </>
+        ) : null}
 
         <Appear inView>
           <Footer />

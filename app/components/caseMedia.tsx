@@ -161,18 +161,20 @@ export function CaseMedia({
   images,
   media,
   video,
+  placeholder,
   alt = "Project screenshot",
 }: {
   image?: string;
   images?: string[];
   media?: MediaKind;
   video?: string;
+  placeholder?: string;
   alt?: string;
 }) {
   if (video) {
     return (
       <div className="flex items-center justify-center rounded-2xl bg-zinc-100 px-6 py-12">
-        <div className="overflow-hidden rounded-[28px]">
+        <div className="overflow-hidden rounded-[26px]">
           <video
             className="block h-[440px] w-auto object-contain"
             src={video}
@@ -197,6 +199,23 @@ export function CaseMedia({
   }
   if (image) return <ImageFrame src={image} alt={alt} />;
   if (media) return <Media kind={media} />;
+  if (placeholder) {
+    return (
+      <div
+        className="flex min-h-[220px] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed px-6 py-16 text-center"
+        style={{ borderColor: "#d6d3d1", background: "#fafaf9" }}
+      >
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <rect x="3" y="4" width="18" height="16" rx="2" />
+          <circle cx="8.5" cy="9.5" r="1.6" />
+          <path d="m21 16-4.5-4.5L7 21" />
+        </svg>
+        <span className="max-w-[320px] text-[13px] leading-snug" style={{ color: colors.tertiary }}>
+          {placeholder}
+        </span>
+      </div>
+    );
+  }
   return null;
 }
 

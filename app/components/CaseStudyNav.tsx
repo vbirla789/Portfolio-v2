@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { colors } from "../theme";
 import { playHover, playScroll, preloadAudio, primeAudio } from "../lib/sound";
 
-const items = [
+type NavItem = { id: string; label: string };
+
+const DEFAULT_ITEMS: NavItem[] = [
   { id: "overview", label: "Overview" },
   { id: "problem", label: "Problem" },
   { id: "outcomes", label: "Outcomes" },
@@ -13,7 +15,7 @@ const items = [
   { id: "process", label: "Process" },
 ];
 
-export default function CaseStudyNav() {
+export default function CaseStudyNav({ items = DEFAULT_ITEMS }: { items?: NavItem[] }) {
   const [active, setActive] = useState("overview");
   // only show nav items whose section actually exists on the page
   const [shown, setShown] = useState(items);
@@ -24,7 +26,7 @@ export default function CaseStudyNav() {
 
   useEffect(() => {
     setShown(items.filter((it) => document.getElementById(it.id)));
-  }, []);
+  }, [items]);
 
   useEffect(() => {
     preloadAudio(); // build the audio graph up-front
@@ -55,7 +57,7 @@ export default function CaseStudyNav() {
       if (el) obs.observe(el);
     });
     return () => obs.disconnect();
-  }, []);
+  }, [items]);
 
   const go = (id: string) => {
     playHover(); // subtle tick on click (was the loud playSelect knock)
