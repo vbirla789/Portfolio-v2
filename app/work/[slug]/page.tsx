@@ -242,7 +242,12 @@ function StoryBlock({ section, company }: { section: StorySection; company: stri
                           <figure key={v.label} className="flex flex-col gap-3">
                             <figcaption
                               className="text-center text-[13px] font-medium"
-                              style={{ color: colors.primary }}
+                              style={{
+                                color:
+                                  v.label === "Final"
+                                    ? colors.primary
+                                    : colors.tertiary,
+                              }}
                             >
                               {v.label}
                             </figcaption>
